@@ -1,3 +1,3 @@
 export default function IndexPage() {
-  return <p>Stevewear</p>;
+  return <p>Stevewear index</p>;
 }
