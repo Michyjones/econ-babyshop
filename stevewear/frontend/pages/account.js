@@ -1,7 +1,7 @@
 export default function AcountPage() {
   return (
     <div>
-      <p>Stevewear</p>
+      <p>Stevewear Account</p>
     </div>
   );
 }
