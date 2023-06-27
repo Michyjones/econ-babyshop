@@ -40,11 +40,11 @@ export default function Header() {
         <Link href="/">
           <Logo>Stevewear</Logo>
         </Link>
+        <Nav />
       </div>
       <div className="sub-bar">
         <p>Search</p>
       </div>
-      <Nav />
     </HeaderStyles>
   );
 }
