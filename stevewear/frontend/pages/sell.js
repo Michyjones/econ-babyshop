@@ -1,7 +1,7 @@
 export default function SellPage() {
   return (
     <div>
-      <p>Stevewear</p>
+      <p>Stevewear Sell</p>
     </div>
   );
 }
