@@ -164,6 +164,8 @@ module.exports = require("react/jsx-dev-runtime");;
 "use strict";
 module.exports = require("styled-components");;
 
+<<<<<<< HEAD
+=======
 /***/ }),
 
 /***/ "?ca47":
@@ -174,6 +176,7 @@ module.exports = require("styled-components");;
 
 /* (ignored) */
 
+>>>>>>> refs/remotes/origin/ft-data-mutation
 /***/ })
 
 };
@@ -183,7 +186,11 @@ module.exports = require("styled-components");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
+<<<<<<< HEAD
+var __webpack_exports__ = __webpack_require__.X(0, ["vendors-node_modules_next_link_js","components_Products_js"], function() { return __webpack_exec__("./pages/products.js"); });
+=======
 var __webpack_exports__ = __webpack_require__.X(0, ["vendors-node_modules_next_link_js"], function() { return __webpack_exec__("./pages/products.js"); });
+>>>>>>> refs/remotes/origin/ft-data-mutation
 module.exports = __webpack_exports__;
 
 })();
