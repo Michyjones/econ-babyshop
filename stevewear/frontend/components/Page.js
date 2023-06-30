@@ -28,7 +28,7 @@ body {
 }
 a {
   text-decoration: none;
-  color: var(--black);
+  color: black;
 }
 a:hover {
   text-decoration: underline;
