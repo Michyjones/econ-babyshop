@@ -11,6 +11,12 @@ const GlobalStyles = createGlobalStyle`
 html {
   --skyblue;
   --maxWidth: 1000px;
+  --lightGray: var(--lightGrey);
+  --black: #393939;
+  --grey: #3A3A3A;
+  --gray: var(--grey);
+  --lightGrey: #e1e1e1;
+  --offWhite: #ededed;
   --bs: 0 12px 24px 0 rgba(0,0,0,5);
   box-sizing: border-box;
   font-size: 10px;
