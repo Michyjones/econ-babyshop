@@ -5,7 +5,9 @@ import {withItemData, statelessSessions} from '@keystone-next/keystone/session';
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
+import { CartItem } from './schemas/CartItem';
 import { sendPasswordResetEmail } from './lib/mail';
+import { extendGraphqlSchema } from './mutations'; 
 
  const databaseURL = process.env.DATABASE_URL || 'http://localhost/database';
 
@@ -44,9 +46,11 @@ import { sendPasswordResetEmail } from './lib/mail';
      lists: createSchema({
          User,
          Product,
-         ProductImage
+         ProductImage,
+         CartItem,
 
      }),
+     extendGraphqlSchema,
      ui: {
          isAccessAllowed: ({session}) => {
              console.log(session);
