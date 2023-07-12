@@ -21,12 +21,14 @@ export default function RequestPassReset() {
   const { inputs, handleChange, resetForm } = useForm({
     email: '',
   });
-  const [signup, { data, error, loading}] = useMutation(RESET_PASSWORD_MUTATION, {
-    variables: inputs,
-  });
+  const [signup, { data, error, loading }] = useMutation(
+    RESET_PASSWORD_MUTATION,
+    {
+      variables: inputs,
+    }
+  );
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(inputs);
     const res = await signup().catch(console.error);
     console.log(res);
     resetForm();
