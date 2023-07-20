@@ -44,11 +44,11 @@ async function checkout(
   });
   console.dir(user, { depth: null })
   const cartItems = user.cart.filter(cartItem => cartItem.product);
-  const amount = cartItems.reduce(function(tally: number, cartItem: CartItemCreateInput) {
-    return tally + cartItem.quantity * cartItem.product.price * 100;
+  const amounts = cartItems.reduce(function(tally: number, cartItem: CartItemCreateInput) {
+    return tally + cartItem.quantity * cartItem.product.price;
   }, 0);
-  console.log(amount);
-
+  console.log(amounts);
+  const amount = amounts * 100;
   const charge = await stripeConfig.paymentIntents.create({
     amount,
     currency: 'kes',
