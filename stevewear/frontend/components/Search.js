@@ -1,4 +1,5 @@
-import { useLazyQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { useQuery } from '@apollo/client';
 import { resetIdCounter, useCombobox } from 'downshift';
 import gql from 'graphql-tag';
 import debounce from 'lodash.debounce';
@@ -7,7 +8,7 @@ import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
 const SEARCH_PRODUCTS_QUERY = gql`
   query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
-    searchTerms: allProducts(
+    allProducts(
       where: {
         OR: [
           { name_contains_i: $searchTerm }
@@ -28,18 +29,27 @@ const SEARCH_PRODUCTS_QUERY = gql`
 
 export default function Search() {
   const router = useRouter();
-  const [findItems, { loading, data, error }] = useLazyQuery(
-    SEARCH_PRODUCTS_QUERY,
-    {
-      fetchPolicy: 'no-cache',
-    }
-  );
-  const items = data?.searchTerms || [];
-  console.log({ loading, data, error });
-  const findItemsButChill = debounce(findItems, 250);
+  const { data, loading, error, refetch } = useQuery(SEARCH_PRODUCTS_QUERY, {
+    variables: { searchTerm: '' },
+    fetchPolicy: 'no-cache',
+  });
+  const items = data?.allProducts || [];
   resetIdCounter();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleInputValueChange = debounce(({ inputValue }) => {}, 350);
+
+  const handleSelectedItemChange = ({ selectedItem }) => {
+    setIsOpen(false);
+    router.push({
+      pathname: `/product/${selectedItem.id}`,
+    });
+  };
+
+  const getItemLabel = (item) => item?.name || '';
+
   const {
-    isOpen,
     inputValue,
     getMenuProps,
     getInputProps,
@@ -48,20 +58,18 @@ export default function Search() {
     highlightedIndex,
   } = useCombobox({
     items,
-    onInputValueChange() {
-      findItemsButChill({
-        variables: {
-          searchTerm: inputValue,
-        },
-      });
-    },
-    onSelectedItemChange({ selectedItem }) {
-      router.push({
-        pathname: `/product/${selectedItem.id}`,
-      });
-    },
-    itemToString: (item) => item?.name || '',
+    onInputValueChange: handleInputValueChange,
+    onSelectedItemChange: handleSelectedItemChange,
+    itemToString: getItemLabel,
+    onToggleMenu: ({ isOpen }) => setIsOpen(isOpen),
   });
+
+  React.useEffect(() => {
+    if (inputValue.trim() !== '') {
+      refetch({ searchTerm: inputValue });
+    }
+  }, [inputValue, refetch]);
+
   return (
     <SearchStyles>
       <div {...getComboboxProps()}>
@@ -71,16 +79,25 @@ export default function Search() {
             placeholder: 'Search for an Item',
             id: 'search',
             className: loading ? 'loading' : null,
+            'aria-label': 'Search',
+            onChange: (e) =>
+              handleInputValueChange({ inputValue: e.target.value }),
+            onFocus: () => setIsOpen(true),
+            onBlur: () => setIsOpen(false),
           })}
         />
       </div>
-      <DropDown {...getMenuProps()}>
+      <DropDown {...getMenuProps()} aria-labelledby="search">
         {isOpen &&
           items.map((item, index) => (
             <DropDownItem
               {...getItemProps({ item, index })}
               key={item.id}
               highlighted={index === highlightedIndex}
+              onClick={() => handleSelectedItemChange({ selectedItem: item })}
+              onMouseDown={(e) => {
+                e.preventDefault();
+              }}
             >
               <img
                 src={item.photo.image.publicUrlTransformed}
