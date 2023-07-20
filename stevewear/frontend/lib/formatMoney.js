@@ -1,12 +1,12 @@
 export default function formatMoney(amount = 0) {
   const options = {
     style: 'currency',
-    currency: 'Ksh',
+    currency: 'Kes',
     minimumFractionDigits: 2,
   };
   if (amount % 100 === 0) {
     options.minimumFractionDigits = 0;
   }
-  const formatter = Intl.NumberFormat('en-US', options);
+  const formatter = Intl.NumberFormat('Kes', options);
   return formatter.format(amount);
 }
