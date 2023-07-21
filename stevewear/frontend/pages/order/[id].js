@@ -51,7 +51,7 @@ export default function SingleOrderPage({ query }) {
       </p>
       <p>
         <span>Order Total:</span>
-        <span>{formatMoney(order.total)}</span>
+        <span>{formatMoney(order.total / 100)}</span>
       </p>
       <p>
         <span>ItemCount:</span>
