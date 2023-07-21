@@ -43,15 +43,17 @@ async function checkout(
     `
   });
   console.dir(user, { depth: null })
+ 
+  
   const cartItems = user.cart.filter(cartItem => cartItem.product);
-  const amounts = cartItems.reduce(function(tally: number, cartItem: CartItemCreateInput) {
-    return tally + cartItem.quantity * cartItem.product.price;
+  const amount = cartItems.reduce(function(tally: number, cartItem: CartItemCreateInput) {
+    return tally + cartItem.quantity * cartItem.product.price*100;
   }, 0);
-  console.log(amounts);
-  const amount = amounts * 100;
+  console.log(amount);
+  console.log(cartItems.total);
   const charge = await stripeConfig.paymentIntents.create({
     amount,
-    currency: 'kes',
+    currency: 'Kes',
     confirm: true,
     payment_method: token,
   }).catch(err => {

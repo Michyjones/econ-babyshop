@@ -29,6 +29,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/order/[id].js"
     ],
+    "/orders": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/orders.js"
+    ],
     "/products": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

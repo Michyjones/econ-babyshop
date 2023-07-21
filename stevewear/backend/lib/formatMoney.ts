@@ -1,12 +1,12 @@
-export default function formatMoney(amount = 0) {
-  const options = {
-    style: 'currency',
-    currency: 'Kes',
-    minimumFractionDigits: 2,
-  };
-  if (amount % 100 === 0) {
-    options.minimumFractionDigits = 0;
-  }
-  const formatter = Intl.NumberFormat('en-US', options);
-  return formatter.format(amount/100);
-}
+const formatMoney = {
+  total: async (root) => {
+    const totalInCents = root.total * 100;
+    return totalInCents;
+  },
+  formattedTotal: async (root) => {
+    const totalInCents = root.total * 100;
+    return `KES ${totalInCents / 100}`;
+  },
+};
+
+export default formatMoney;
