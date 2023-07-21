@@ -8,8 +8,10 @@ import { ProductImage } from './schemas/ProductImage';
 import { CartItem } from './schemas/CartItem';
 import { OrderItem } from './schemas/OrderItem';
 import { Order } from './schemas/Order';
+import { Role } from './schemas/Role';
 import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations'; 
+import { permissionsList } from './schemas/fields';
 
  const databaseURL = process.env.DATABASE_URL || 'http://localhost/database';
 
@@ -52,6 +54,7 @@ import { extendGraphqlSchema } from './mutations';
          CartItem,
          OrderItem,
          Order,
+         Role,
 
      }),
      extendGraphqlSchema,
@@ -63,7 +66,7 @@ import { extendGraphqlSchema } from './mutations';
          },
      },
      session: withItemData(statelessSessions(sessionConfig), {
-         User: 'id name email',
+        User: `id name email role { ${permissionsList.join(' ')} }`,
      })
  }));
 
